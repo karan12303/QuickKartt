@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Row, Col, Container, Toast, ToastContainer, Pagination } from 'react-bootstrap';
+import { Row, Col, Container, Toast, ToastContainer, Pagination, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import AnimatedProductCard from '../components/AnimatedProductCard';
@@ -10,6 +10,9 @@ import FuturisticHero from '../components/FuturisticHero';
 import { staggerContainer, fadeIn } from '../utils/animations';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
+
+// Import mock data for fallback
+import { mockProducts } from '../data/mockProducts';
 
 const HomeScreen = () => {
   const { addToCart } = useContext(CartContext);
@@ -35,10 +38,14 @@ const HomeScreen = () => {
   const [paginatedProducts, setPaginatedProducts] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
 
+  // State to track if we're using fallback data
+  const [usingFallback, setUsingFallback] = useState(false);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
+        setUsingFallback(false);
 
         // Fetch all products by setting a high limit
         const { data } = await axios.get('/api/products', {
@@ -61,17 +68,57 @@ const HomeScreen = () => {
         }, 100);
       } catch (error) {
         console.error('Error fetching products:', error);
-        setError(
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        );
+
+        // Use mock data as fallback
+        console.log('Using mock data as fallback');
+        setProducts(mockProducts);
+        setFilteredProducts(mockProducts);
+        setUsingFallback(true);
+        setError(null); // Clear error since we're using fallback data
         setLoading(false);
       }
     };
 
     fetchProducts();
   }, []);
+
+  // Function to retry loading products from the API
+  const handleRetryFetch = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch products from API
+      const { data } = await axios.get('/api/products', {
+        params: {
+          limit: 1000,
+          page: 1,
+          sort: 'createdAt',
+          order: 'desc'
+        },
+        timeout: 15000
+      });
+
+      // Update state with fetched products
+      const productList = data.products || data;
+      setProducts(productList);
+      setFilteredProducts(productList);
+      setUsingFallback(false);
+      setLoading(false);
+
+      // Show success toast
+      setToastMessage('Products loaded successfully!');
+      setShowToast(true);
+    } catch (error) {
+      console.error('Error retrying product fetch:', error);
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : 'Failed to load products from server. Using fallback data.'
+      );
+      setLoading(false);
+    }
+  };
 
   // Apply filters and sorting
   const applyFilters = () => {
@@ -350,6 +397,31 @@ const HomeScreen = () => {
                     </select>
                   </motion.div>
                 </div>
+
+                {/* Fallback data notification */}
+                {usingFallback && !loading && (
+                  <motion.div
+                    className="alert alert-warning mb-4"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <strong>Using demo products.</strong> Unable to connect to the server.
+                        You're viewing sample product data.
+                      </div>
+                      <Button
+                        variant="outline-primary"
+                        size="sm"
+                        onClick={handleRetryFetch}
+                        className="ms-3"
+                      >
+                        Retry
+                      </Button>
+                    </div>
+                  </motion.div>
+                )}
 
                 {loading ? (
                   <SkeletonLoader count={12} />

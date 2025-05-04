@@ -14,9 +14,18 @@ const checkMongoDBConnection = async () => {
     }
 
     // Double-check with a simple query
-    await Product.findOne().lean().limit(1);
-    console.log('MongoDB connection verified with successful query');
-    return true;
+    try {
+      await Product.findOne().lean().limit(1).maxTimeMS(5000);
+      console.log('MongoDB connection verified with successful query');
+      return true;
+    } catch (queryError) {
+      console.error('MongoDB query check failed:', queryError.message);
+
+      // If the query fails but connection state is connected,
+      // we'll still return true and let the actual query handle any specific errors
+      console.log('Using connection state as fallback indicator');
+      return connected;
+    }
   } catch (error) {
     console.error('MongoDB connection check failed:', error.message);
     console.error('Error details:', JSON.stringify(error, null, 2));

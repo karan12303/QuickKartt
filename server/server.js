@@ -73,6 +73,17 @@ app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/reviews', require('./routes/reviewRoutes'));
 app.use('/api/paypal', require('./routes/paypalRoutes'));
 app.use('/api/banner', require('./routes/bannerRoutes'));
+app.use('/api/diagnostics', require('./routes/diagnosticRoutes')); // Diagnostic routes
+
+// Simple health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV,
+    mongodb: isConnected() ? 'connected' : 'disconnected'
+  });
+});
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
