@@ -1,18 +1,25 @@
 const Product = require('../models/productModel');
 const { mockProducts } = require('../data/mockData');
+const { isConnected } = require('../config/db');
 
-// Flag to track if MongoDB is available
-let isMongoDBAvailable = true;
-
-// Function to check MongoDB connection
+// Function to check MongoDB connection with better error handling
 const checkMongoDBConnection = async () => {
   try {
-    await Product.findOne();
-    isMongoDBAvailable = true;
+    // First check the connection state
+    const connected = isConnected();
+
+    if (!connected) {
+      console.log('MongoDB is not connected according to connection state');
+      return false;
+    }
+
+    // Double-check with a simple query
+    await Product.findOne().lean().limit(1);
+    console.log('MongoDB connection verified with successful query');
     return true;
   } catch (error) {
     console.error('MongoDB connection check failed:', error.message);
-    isMongoDBAvailable = false;
+    console.error('Error details:', JSON.stringify(error, null, 2));
     return false;
   }
 };
@@ -22,9 +29,9 @@ const checkMongoDBConnection = async () => {
 // @access  Public
 const getProducts = async (req, res) => {
   try {
-    // Check MongoDB connection
-    await checkMongoDBConnection();
+    console.log('Fetching products...');
 
+    // Parse query parameters with defaults
     const {
       limit = 12,
       page = 1,
@@ -32,6 +39,12 @@ const getProducts = async (req, res) => {
       order = 'desc',
       category = ''
     } = req.query;
+
+    console.log(`Query params: limit=${limit}, page=${page}, sort=${sort}, order=${order}, category=${category}`);
+
+    // Check MongoDB connection
+    const isMongoDBAvailable = await checkMongoDBConnection();
+    console.log(`MongoDB available: ${isMongoDBAvailable}`);
 
     // If MongoDB is not available, use mock data
     if (!isMongoDBAvailable) {
@@ -58,48 +71,65 @@ const getProducts = async (req, res) => {
       const endIndex = startIndex + Number(limit);
       const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
+      console.log(`Returning ${paginatedProducts.length} mock products`);
       return res.json({
         products: paginatedProducts,
         page: Number(page),
         pages: Math.ceil(filteredProducts.length / Number(limit)),
-        total: filteredProducts.length
+        total: filteredProducts.length,
+        source: 'mock'
       });
     }
 
     // If MongoDB is available, proceed with database query
+    console.log('Using MongoDB for product data');
+
     // Build query
     const query = {};
     if (category) {
       query.category = { $regex: category, $options: 'i' };
     }
 
-    // Count total products for pagination info
-    const count = await Product.countDocuments(query);
+    try {
+      // Count total products for pagination info
+      console.log('Counting documents with query:', JSON.stringify(query));
+      const count = await Product.countDocuments(query);
+      console.log(`Found ${count} total products matching query`);
 
-    // Build sort options
-    const sortOptions = {};
-    sortOptions[sort] = order === 'desc' ? -1 : 1;
+      // Build sort options
+      const sortOptions = {};
+      sortOptions[sort] = order === 'desc' ? -1 : 1;
+      console.log('Sort options:', JSON.stringify(sortOptions));
 
-    // Execute query with pagination, sorting and limit
-    const products = await Product.find(query)
-      .sort(sortOptions)
-      .limit(Number(limit))
-      .skip(Number(limit) * (Number(page) - 1))
-      .lean(); // Use lean() for better performance
+      // Execute query with pagination, sorting and limit
+      console.log('Executing find query with pagination');
+      const products = await Product.find(query)
+        .sort(sortOptions)
+        .limit(Number(limit))
+        .skip(Number(limit) * (Number(page) - 1))
+        .lean(); // Use lean() for better performance
 
-    // Add pagination info
-    res.json({
-      products,
-      page: Number(page),
-      pages: Math.ceil(count / Number(limit)),
-      total: count
-    });
+      console.log(`Returning ${products.length} products from database`);
+
+      // Add pagination info
+      return res.json({
+        products,
+        page: Number(page),
+        pages: Math.ceil(count / Number(limit)),
+        total: count,
+        source: 'database'
+      });
+    } catch (dbError) {
+      console.error('Error querying MongoDB:', dbError);
+      throw dbError; // Re-throw to be caught by outer catch block
+    }
   } catch (error) {
     console.error('Error fetching products:', error);
+    console.error('Error stack:', error.stack);
 
-    // If there's an error, try to use mock data
+    // If there's an error, try to use mock data as fallback
     try {
-      console.log('Using mock product data due to error');
+      console.log('Using mock product data as fallback due to error');
       const {
         limit = 12,
         page = 1,
@@ -118,15 +148,22 @@ const getProducts = async (req, res) => {
       const endIndex = startIndex + Number(limit);
       const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
+      console.log(`Returning ${paginatedProducts.length} mock products as fallback`);
       return res.json({
         products: paginatedProducts,
         page: Number(page),
         pages: Math.ceil(filteredProducts.length / Number(limit)),
-        total: filteredProducts.length
+        total: filteredProducts.length,
+        source: 'mock-fallback'
       });
     } catch (mockError) {
       console.error('Error using mock data:', mockError);
-      res.status(500).json({ message: 'Server Error', error: error.message });
+      return res.status(500).json({
+        message: 'Server Error',
+        error: error.message,
+        stack: process.env.NODE_ENV === 'production' ? null : error.stack,
+        details: 'Failed to fetch products from both database and mock data'
+      });
     }
   }
 };
