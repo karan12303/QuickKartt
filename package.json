@@ -10,7 +10,9 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:seed": "node server/seeder.js",
     "data:destroy": "node server/seeder.js -d",
-    "update:categories": "node server/updateCategories.js"
+    "update:categories": "node server/updateCategories.js",
+    "build": "cd client && npm install && npm run build",
+    "vercel-build": "cd client && npm install && npm run build"
   },
   "keywords": [
     "mern",

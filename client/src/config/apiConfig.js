@@ -4,8 +4,11 @@
  * in both development and production environments.
  */
 
-// Base API URL - use environment variable or default to localhost in development
-export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+// Import the base URL from vercelConfig
+import { API_BASE_URL as BASE_URL } from './vercelConfig';
+
+// Export the API base URL
+export const API_BASE_URL = BASE_URL;
 
 // API Endpoints
 export const API_ENDPOINTS = {

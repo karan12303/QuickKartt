@@ -44,7 +44,7 @@ app.use(express.json()); // Parse JSON bodies
 
 // Configure CORS with specific options
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://192.168.1.9:3000', 'http://192.168.1.9:3001'],
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://192.168.1.9:3000', 'http://192.168.1.9:3001', 'https://quick-kartt-w98g-awfgyw8lt-karan12303s-projects.vercel.app', 'https://quick-kartt.vercel.app'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -91,8 +91,13 @@ if (process.env.NODE_ENV === 'production') {
 app.use(notFound);
 app.use(errorHandler);
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-});
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  });
+}
+
+// Export the Express API for Vercel
+module.exports = app;
