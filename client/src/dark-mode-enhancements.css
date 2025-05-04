@@ -1,0 +1,261 @@
+/* Dark Mode Enhancements for QuickKart */
+
+/* Banner adjustments for dark mode */
+body.dark-mode .hero-futuristic {
+  background-color: var(--dark-surface);
+}
+
+body.dark-mode .hero-futuristic::before {
+  opacity: 0.2;
+}
+
+body.dark-mode .hero-futuristic .hero-title {
+  color: var(--white);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .hero-futuristic .hero-subtitle {
+  color: var(--white);
+  opacity: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .hero-futuristic .product-badge {
+  color: var(--white);
+}
+
+body.dark-mode .hero-futuristic .badge-highlight {
+  background-color: rgba(255, 107, 0, 0.2);
+  color: var(--white);
+  border: 1px solid rgba(255, 107, 0, 0.5);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .hero-features-minimal p {
+  color: var(--gray);
+}
+
+body.dark-mode .hero-title-highlight {
+  background: linear-gradient(to bottom, transparent 80%, rgba(255, 255, 255, 0.1) 20%);
+  border-bottom: 2px solid var(--white);
+}
+
+body.dark-mode .hero-particle {
+  background-color: var(--primary-light);
+  opacity: 0.2;
+}
+
+body.dark-mode .hero-progress-bar {
+  background: var(--primary-gradient);
+  opacity: 0.7;
+}
+
+/* Product card adjustments for dark mode */
+body.dark-mode .product-card-futuristic {
+  background-color: var(--dark-surface);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .product-card-futuristic .product-image {
+  background-color: rgba(30, 30, 30, 0.8);
+}
+
+body.dark-mode .product-card-futuristic .product-content {
+  background-color: var(--dark-surface);
+  color: var(--dark-text);
+}
+
+body.dark-mode .product-card-futuristic .product-title {
+  color: var(--dark-text);
+}
+
+body.dark-mode .product-card-futuristic .product-category {
+  color: var(--gray);
+}
+
+body.dark-mode .product-card-futuristic .product-price {
+  color: var(--primary-light);
+}
+
+body.dark-mode .product-card-futuristic .product-rating-count {
+  color: var(--gray);
+}
+
+body.dark-mode .product-card-futuristic .text-muted {
+  color: var(--gray) !important;
+}
+
+body.dark-mode .product-card-futuristic .product-overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .product-action-btn {
+  background-color: var(--dark-surface);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .product-action-btn:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Featured product cards in dark mode */
+body.dark-mode .featured-product-card {
+  background-color: var(--dark-surface);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .featured-product-img {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-color: var(--dark-border);
+}
+
+/* Toast notifications in dark mode */
+body.dark-mode .toast {
+  background-color: var(--dark-surface);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .toast-header {
+  background-color: rgba(30, 30, 30, 0.8);
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+/* Fix navbar brand in dark mode */
+body.dark-mode .navbar-brand span {
+  color: var(--dark-text) !important;
+}
+
+/* Fix hero section in dark mode */
+body.dark-mode .hero-section .hero-overlay {
+  background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.4) 100%);
+}
+
+body.dark-mode .hero-section .hero-text {
+  color: var(--dark-text);
+}
+
+/* Fix promo banner in dark mode */
+body.dark-mode .promo-banner .promo-overlay {
+  background: rgba(0,0,0,0.7);
+}
+
+/* Fix category cards in dark mode */
+body.dark-mode .category-card {
+  background-color: var(--dark-surface);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .category-card .card-title {
+  color: var(--dark-text);
+}
+
+/* Fix product badges in dark mode */
+body.dark-mode .badge-gradient-primary {
+  background: var(--primary-gradient);
+  color: white;
+}
+
+body.dark-mode .badge-gradient-secondary {
+  background: var(--secondary-gradient);
+  color: white;
+}
+
+/* Fix quick view modal in dark mode */
+body.dark-mode .modal-content {
+  background-color: var(--dark-surface);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .modal-header {
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .modal-footer {
+  border-color: var(--dark-border);
+}
+
+/* Fix mobile navigation in dark mode */
+body.dark-mode .mobile-nav {
+  background-color: var(--dark-surface);
+  border-top: 1px solid var(--dark-border);
+}
+
+body.dark-mode .mobile-nav-item {
+  color: var(--gray);
+}
+
+body.dark-mode .mobile-nav-item.active,
+body.dark-mode .mobile-nav-item:hover {
+  color: var(--primary-light);
+}
+
+/* Fix filter products section in dark mode */
+body.dark-mode .filter-card {
+  background-color: var(--dark-surface);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .filter-card .card-header {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .filter-card .card-header h5 {
+  color: var(--white);
+}
+
+body.dark-mode .filter-card .text-dark {
+  color: var(--white) !important;
+}
+
+body.dark-mode .filter-card .form-label {
+  color: var(--white);
+}
+
+body.dark-mode .filter-card .form-select {
+  background-color: var(--dark-surface);
+  color: var(--white);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .filter-card .form-range::-webkit-slider-runnable-track {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .filter-card .form-range::-webkit-slider-thumb {
+  background-color: var(--primary);
+}
+
+body.dark-mode .filter-card .form-check-label {
+  color: var(--white);
+}
+
+body.dark-mode .filter-card .price-range-values {
+  color: var(--white);
+}
+
+body.dark-mode .filter-card .btn-link {
+  color: var(--white);
+}
+
+body.dark-mode .filter-card .btn-outline-secondary {
+  color: var(--white);
+  border-color: var(--gray);
+}
+
+body.dark-mode .filter-card .btn-outline-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .brand-filter-container::-webkit-scrollbar-track,
+body.dark-mode .material-filter-container::-webkit-scrollbar-track {
+  background: var(--dark-surface);
+}
+
+body.dark-mode .brand-filter-container::-webkit-scrollbar-thumb,
+body.dark-mode .material-filter-container::-webkit-scrollbar-thumb {
+  background: var(--gray);
+}

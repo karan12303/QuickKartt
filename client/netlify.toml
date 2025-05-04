@@ -1,0 +1,32 @@
+[build]
+  command = "npm run netlify-build"
+  publish = "build"
+
+# Environment variables for the build
+[build.environment]
+  # Set NODE_VERSION to ensure compatibility
+  NODE_VERSION = "16"
+  # Disable source maps in production for smaller bundle size
+  GENERATE_SOURCEMAP = "false"
+
+# Redirects for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers to improve security and caching
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; connect-src 'self' https://your-backend-url.com https://maps.googleapis.com; img-src 'self' data: https:; script-src 'self' https://maps.googleapis.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:;"
+
+# Cache static assets
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

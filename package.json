@@ -1,0 +1,31 @@
+{
+  "name": "mern-ecommerce",
+  "version": "1.0.0",
+  "description": "MERN Stack E-Commerce Application",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:seed": "node server/seeder.js",
+    "data:destroy": "node server/seeder.js -d",
+    "update:categories": "node server/updateCategories.js"
+  },
+  "keywords": [
+    "mern",
+    "ecommerce",
+    "react",
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

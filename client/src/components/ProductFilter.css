@@ -1,0 +1,148 @@
+.filter-card {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.filter-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.filter-card .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1rem 1.25rem;
+}
+
+.filter-card .card-body {
+  padding: 1.25rem;
+}
+
+/* Price Range Styling */
+.price-range-container {
+  padding: 0 0.5rem;
+}
+
+.form-range {
+  height: 6px;
+}
+
+.form-range::-webkit-slider-thumb {
+  background-color: #FF6B00;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.form-range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.form-range::-webkit-slider-runnable-track {
+  background-color: #e9ecef;
+  height: 6px;
+  border-radius: 3px;
+}
+
+/* Color Options */
+.color-option {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.selected {
+  transform: scale(1.1);
+}
+
+/* Brand and Material Containers */
+.brand-filter-container,
+.material-filter-container {
+  max-height: 150px;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-bottom: 10px;
+  scrollbar-width: thin;
+}
+
+.brand-filter-container::-webkit-scrollbar,
+.material-filter-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.brand-filter-container::-webkit-scrollbar-track,
+.material-filter-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.brand-filter-container::-webkit-scrollbar-thumb,
+.material-filter-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.brand-filter-container::-webkit-scrollbar-thumb:hover,
+.material-filter-container::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* Form Controls */
+.form-control {
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #FF6B00;
+  box-shadow: 0 0 0 0.25rem rgba(255, 107, 0, 0.25);
+}
+
+/* Action Buttons */
+.filter-action-btn {
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.filter-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-action-btn:active {
+  transform: translateY(0);
+}
+
+/* Badge Styling */
+.filter-badge {
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.filter-badge:hover {
+  transform: translateY(-2px);
+}
+
+.filter-badge .close-icon {
+  margin-left: 0.5rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.filter-badge .close-icon:hover {
+  opacity: 1;
+}

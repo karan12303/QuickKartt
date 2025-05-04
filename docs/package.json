@@ -1,0 +1,17 @@
+{
+  "name": "quickkart-documentation",
+  "version": "1.0.0",
+  "description": "Documentation for QuickKart E-Commerce Project",
+  "main": "convert_to_pptx.js",
+  "scripts": {
+    "convert-pptx": "node convert_to_pptx.js",
+    "convert-pdf": "npx md-to-pdf QuickKart_Project_Report.md && npx md-to-pdf QuickKart_Project_Synopsis.md"
+  },
+  "dependencies": {
+    "pptxgenjs": "^3.12.0"
+  },
+  "devDependencies": {
+    "md-to-pdf": "^5.2.4"
+  },
+  "private": true
+}

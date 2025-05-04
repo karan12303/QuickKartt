@@ -1,0 +1,110 @@
+.order-history-title {
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 0.5rem;
+}
+
+.order-history-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.order-history-table {
+  margin-top: 1rem;
+}
+
+.order-history-table th {
+  font-weight: 600;
+  background-color: #f8f9fa;
+}
+
+.order-history-table td {
+  vertical-align: middle;
+}
+
+.order-images-cell {
+  min-width: 180px;
+  width: 180px;
+}
+
+.order-review-cell {
+  min-width: 150px;
+  width: 150px;
+}
+
+/* Order tabs styling */
+.order-tabs .nav-tabs {
+  border: none;
+  margin-bottom: 0.5rem;
+}
+
+.order-tabs .nav-link {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  margin-right: 0.25rem;
+  border: 1px solid #dee2e6;
+}
+
+.order-tabs .nav-link.active {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #495057;
+  font-weight: 500;
+}
+
+.order-tabs .tab-content {
+  padding-top: 0.5rem;
+}
+
+.small-tab {
+  font-size: 0.75rem;
+}
+
+.order-id-column {
+  font-weight: 600;
+  color: #333;
+}
+
+.order-date-column {
+  color: #666;
+}
+
+.order-total-column {
+  font-weight: 600;
+  color: #28a745;
+}
+
+.order-status-badge {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.order-actions-column {
+  text-align: center;
+}
+
+.order-detail-btn {
+  min-width: 120px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .order-history-container {
+    padding: 1rem;
+  }
+
+  .order-images-cell {
+    min-width: 100px;
+  }
+
+  .order-detail-btn {
+    min-width: auto;
+  }
+}

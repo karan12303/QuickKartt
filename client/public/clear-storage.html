@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Local Storage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 50px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #e64a19;
+        }
+        .success {
+            color: green;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QuickKart Storage Reset</h1>
+        <p>If you're experiencing authentication issues, click the button below to clear your local storage and reset your session.</p>
+        <button id="clearBtn">Clear Local Storage</button>
+        <p class="success" id="successMsg">Storage cleared successfully! You will be redirected to the login page in <span id="countdown">3</span> seconds.</p>
+    </div>
+
+    <script>
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            // Clear localStorage
+            localStorage.clear();
+            
+            // Show success message
+            document.getElementById('successMsg').style.display = 'block';
+            
+            // Countdown and redirect
+            let count = 3;
+            const countdownEl = document.getElementById('countdown');
+            
+            const interval = setInterval(function() {
+                count--;
+                countdownEl.textContent = count;
+                
+                if (count <= 0) {
+                    clearInterval(interval);
+                    window.location.href = '/login';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
